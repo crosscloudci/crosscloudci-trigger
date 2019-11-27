@@ -196,6 +196,11 @@ module CrossCloudCI
         `#{sync_k8s} #{git_host} #{k8s_sha}`
       end
 
+      # Separated out so that the tests can stub
+      def build_delay
+        sleep 120
+      end
+
       # Purpose: loop through all active projects and call build project for each
       def build_active_projects
         load_project_data
@@ -239,7 +244,7 @@ module CrossCloudCI
               # See https://github.com/prometheus/promu/blob/d629dfcdec49387b42164f3fe6dad353f922557e/cmd/crossbuild.go#L198
               if project_name == "prometheus"
                 puts 'Starting prometheus build delay'
-                sleep 120
+                build_delay
               end
 
               puts "Calling build_project(#{project_id}, #{ref}, #{options})"
