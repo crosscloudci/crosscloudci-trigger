@@ -3,6 +3,7 @@ require 'base64'
 require 'faraday'
 require 'gitlab/gitlab_proxy'
 
+
 module CrossCloudCi
   class CiServiceError < StandardError
   end
@@ -197,8 +198,8 @@ module CrossCloudCI
       end
 
       # Separated out so that the tests can stub
-      def build_delay
-        sleep 120
+      def build_delay(count)
+        sleep count 
       end
 
       # Purpose: loop through all active projects and call build project for each
@@ -225,6 +226,12 @@ module CrossCloudCI
           ["stable_ref", "head_ref"].each do |release_key_name|
             #next if name == "kubernetes" and release_key_name == "head_ref"
             ref = @config[:projects][name][release_key_name]
+            
+            # Envoy builds will clash if master & stable builds run at the same time.
+            if release_key_name == "head_ref" && project_name == "envoy"
+              puts 'Starting envoy build delay'
+              build_delay(1080)
+            end
 
             # @logger.debug "project name #{project_name}"
 
@@ -242,9 +249,9 @@ module CrossCloudCI
 
               # Prom builds will clash if they run at the same time due to the names being based on the timestamp.
               # See https://github.com/prometheus/promu/blob/d629dfcdec49387b42164f3fe6dad353f922557e/cmd/crossbuild.go#L198
-              if project_name == "prometheus"
+              unless (project_name != "prometheus") || (machine_arch == arch_types[0]) && (ref != "master") then
                 puts 'Starting prometheus build delay'
-                build_delay
+                build_delay(120)
               end
 
               puts "Calling build_project(#{project_id}, #{ref}, #{options})"

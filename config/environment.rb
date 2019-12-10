@@ -105,6 +105,12 @@ module CrossCloudCi
             "jaeger" => {
               :api_token => ENV["GITLAB_JAEGER_TOKEN"]
             },
+            "etcd" => {
+              :api_token => ENV["GITLAB_ETCD_TOKEN"]
+            },
+            "vitess" => {
+              :api_token => ENV["GITLAB_VITESS_TOKEN"]
+            },
           }
         }
       }
