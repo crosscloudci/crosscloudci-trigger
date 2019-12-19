@@ -197,6 +197,11 @@ module CrossCloudCI
         `#{sync_k8s} #{git_host} #{k8s_sha}`
       end
 
+      # Separated out so that the tests can stub
+      def build_delay(count)
+        sleep count 
+      end
+
       # Purpose: loop through all active projects and call build project for each
       def build_active_projects
         load_project_data
@@ -225,7 +230,7 @@ module CrossCloudCI
             # Envoy builds will clash if master & stable builds run at the same time.
             if release_key_name == "head_ref" && project_name == "envoy"
               puts 'Starting envoy build delay'
-              sleep 1080
+              build_delay(1080)
             end
 
             # @logger.debug "project name #{project_name}"
@@ -246,7 +251,7 @@ module CrossCloudCI
               # See https://github.com/prometheus/promu/blob/d629dfcdec49387b42164f3fe6dad353f922557e/cmd/crossbuild.go#L198
               unless (project_name != "prometheus") || (machine_arch == arch_types[0]) && (ref != "master") then
                 puts 'Starting prometheus build delay'
-                sleep 180
+                build_delay(120)
               end
 
               puts "Calling build_project(#{project_id}, #{ref}, #{options})"

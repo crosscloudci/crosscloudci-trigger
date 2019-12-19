@@ -6,6 +6,8 @@ RSpec.describe CrossCloudCI::CiService do
      client = CrossCloudCI::CiService::Client.new(config)
      gitlab_proxy = double()
      client.gitlab_proxy = gitlab_proxy
+     allow(client).to receive(:sync_k8s_build)
+     allow(client).to receive(:build_delay)
      allow(gitlab_proxy).to receive(:trigger_pipeline) do 
        a = Object.new 
        class << a  
@@ -25,6 +27,8 @@ RSpec.describe CrossCloudCI::CiService do
      client = CrossCloudCI::CiService::Client.new(config)
      gitlab_proxy = double()
      client.gitlab_proxy = gitlab_proxy
+     allow(client).to receive(:sync_k8s_build)
+     allow(client).to receive(:build_delay)
      allow(gitlab_proxy).to receive(:trigger_pipeline) do 
        a = Object.new 
        class << a  
@@ -60,6 +64,8 @@ RSpec.describe CrossCloudCI::CiService do
      client = CrossCloudCI::CiService::Client.new(config)
      gitlab_proxy = double()
      client.gitlab_proxy = gitlab_proxy
+     allow(client).to receive(:sync_k8s_build)
+     allow(client).to receive(:build_delay)
      allow(gitlab_proxy).to receive(:trigger_pipeline) do 
        a = Object.new 
        class << a  
@@ -86,6 +92,8 @@ RSpec.describe CrossCloudCI::CiService do
      client = CrossCloudCI::CiService::Client.new(config)
      gitlab_proxy = double()
      client.gitlab_proxy = gitlab_proxy
+     allow(client).to receive(:sync_k8s_build)
+     allow(client).to receive(:build_delay)
      allow(gitlab_proxy).to receive(:trigger_pipeline) do 
        a = Object.new 
        class << a  
@@ -127,6 +135,8 @@ RSpec.describe CrossCloudCI::CiService do
      client = CrossCloudCI::CiService::Client.new(config)
      gitlab_proxy = double()
      client.gitlab_proxy = gitlab_proxy
+     allow(client).to receive(:sync_k8s_build)
+     allow(client).to receive(:build_delay)
      allow(gitlab_proxy).to receive(:trigger_pipeline) do 
        a = Object.new 
        class << a  
@@ -165,6 +175,8 @@ RSpec.describe CrossCloudCI::CiService do
    #   client = CrossCloudCI::CiService::Client.new(config)
    #   gitlab_proxy = double()
    #   client.gitlab_proxy = gitlab_proxy
+     # allow(client).to receive(:sync_k8s_build)
+     # allow(client).to receive(:build_delay)
    #   allow(gitlab_proxy).to receive(:trigger_pipeline) do 
    #     a = Object.new 
    #     class << a  
@@ -203,6 +215,8 @@ RSpec.describe CrossCloudCI::CiService do
      client = CrossCloudCI::CiService::Client.new(config)
      gitlab_proxy = double()
      client.gitlab_proxy = gitlab_proxy
+     allow(client).to receive(:sync_k8s_build)
+     allow(client).to receive(:build_delay)
      allow(gitlab_proxy).to receive(:trigger_pipeline) do 
        a = Object.new 
        class << a  
