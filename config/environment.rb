@@ -108,6 +108,9 @@ module CrossCloudCi
             "etcd" => {
               :api_token => ENV["GITLAB_ETCD_TOKEN"]
             },
+            "tuf" => {
+              :api_token => ENV["GITLAB_TUF_TOKEN"]
+            },
             "vitess" => {
               :api_token => ENV["GITLAB_VITESS_TOKEN"]
             },
