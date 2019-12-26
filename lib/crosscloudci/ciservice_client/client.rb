@@ -57,7 +57,7 @@ module CrossCloudCI
         trigger_variables[:CROSS_CLOUD_YML] = @config[:cross_cloud_yml]
 
         case ref 
-        when "master"
+        when "master" , "develop"
           pipeline_release_type = "head"
         else
           pipeline_release_type = "stable"
@@ -322,7 +322,8 @@ module CrossCloudCI
         trigger_variables[:ARCH] = arch
 
         case target_project_ref 
-        when "master"
+          #TODO Get these values from the project specific 'head_ref' yml entry
+        when "master" , "develop"
           pipeline_release_type = "head"
         else
           pipeline_release_type = "stable"
@@ -615,7 +616,7 @@ module CrossCloudCI
         trigger_variables[:PROVISION_PIPELINE_ID] = target_provision_id # cross-cloud k8s provisioning
 
         case trigger_ref 
-        when "master"
+        when "master" , "develop"
           pipeline_release_type = "head"
         else
           pipeline_release_type = "stable"

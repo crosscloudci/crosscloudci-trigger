@@ -11,6 +11,7 @@ gem 'faraday'
 
 group :development, :test do
   gem 'byebug'
+  gem 'pry-byebug'
   #gem 'guard-rspec'
   gem 'rspec'
 end
