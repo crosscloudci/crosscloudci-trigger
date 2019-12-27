@@ -175,7 +175,7 @@ module CrossCloudCI
 
       def k8s_nightly_sha
         #`curl -q -s https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest.txt`
-        k8s_cross_latest_url="https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest.txt"
+        k8s_cross_latest_url="https://storage.googleapis.com/kubernetes-release-dev/ci/k8s-master.txt"
         response = Faraday.get k8s_cross_latest_url 
         if response.nil?
           @logger.fatal "Failed to retrieve latest k8s ci-cross release from #{k8s_cross_latest_url}"
