@@ -31,7 +31,7 @@ else
 fi
 
 if [ -z "$2" ] ; then
-  K8S_COMMIT=$(curl https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest.txt)
+    K8S_COMMIT=$(curl https://storage.googleapis.com/kubernetes-release-dev/ci/k8s-master.txt)
 else
   K8S_COMMIT="$2"
 fi

@@ -57,7 +57,7 @@ module CrossCloudCI
         trigger_variables[:CROSS_CLOUD_YML] = @config[:cross_cloud_yml]
 
         case ref 
-        when "master"
+        when "master" , "develop"
           pipeline_release_type = "head"
         else
           pipeline_release_type = "stable"
@@ -175,7 +175,7 @@ module CrossCloudCI
 
       def k8s_nightly_sha
         #`curl -q -s https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest.txt`
-        k8s_cross_latest_url="https://storage.googleapis.com/kubernetes-release-dev/ci-cross/latest.txt"
+        k8s_cross_latest_url="https://storage.googleapis.com/kubernetes-release-dev/ci/k8s-master.txt"
         response = Faraday.get k8s_cross_latest_url 
         if response.nil?
           @logger.fatal "Failed to retrieve latest k8s ci-cross release from #{k8s_cross_latest_url}"
@@ -195,6 +195,11 @@ module CrossCloudCI
         puts "sync_k8s_build external script: #{sync_k8s}"
         puts "sync_k8s_build git host: #{git_host}, k8s sha: #{k8s_sha}"
         `#{sync_k8s} #{git_host} #{k8s_sha}`
+      end
+
+      # Separated out so that the tests can stub
+      def build_delay(count)
+        sleep count 
       end
 
       # Purpose: loop through all active projects and call build project for each
@@ -225,7 +230,7 @@ module CrossCloudCI
             # Envoy builds will clash if master & stable builds run at the same time.
             if release_key_name == "head_ref" && project_name == "envoy"
               puts 'Starting envoy build delay'
-              sleep 1080
+              build_delay(1080)
             end
 
             # @logger.debug "project name #{project_name}"
@@ -246,7 +251,7 @@ module CrossCloudCI
               # See https://github.com/prometheus/promu/blob/d629dfcdec49387b42164f3fe6dad353f922557e/cmd/crossbuild.go#L198
               unless (project_name != "prometheus") || (machine_arch == arch_types[0]) && (ref != "master") then
                 puts 'Starting prometheus build delay'
-                sleep 180
+                build_delay(120)
               end
 
               puts "Calling build_project(#{project_id}, #{ref}, #{options})"
@@ -317,7 +322,8 @@ module CrossCloudCI
         trigger_variables[:ARCH] = arch
 
         case target_project_ref 
-        when "master"
+          #TODO Get these values from the project specific 'head_ref' yml entry
+        when "master" , "develop"
           pipeline_release_type = "head"
         else
           pipeline_release_type = "stable"
@@ -610,7 +616,7 @@ module CrossCloudCI
         trigger_variables[:PROVISION_PIPELINE_ID] = target_provision_id # cross-cloud k8s provisioning
 
         case trigger_ref 
-        when "master"
+        when "master" , "develop"
           pipeline_release_type = "head"
         else
           pipeline_release_type = "stable"
