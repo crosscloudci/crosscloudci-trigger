@@ -5,20 +5,6 @@ module CrossCloudCi
   module Common
     def self.init_config(options = {})
       case ENV["CROSS_CLOUD_CI_ENV"]
-      when "cidev"
-        gitlab_base_url="https://gitlab.cidev.cncf.ci"
-        cross_cloud_yml="https://raw.githubusercontent.com/crosscloudci/cncf-configuration/integration/cross-cloud.yml"
-        cross_cloud_ref="master"
-        cross_project_ref="master"
-        dashboard_api_host_port="cidevapi.cncf.ci"
-        project_segment_env="master"
-      when "staging"
-        gitlab_base_url="https://gitlab.staging.cncf.ci"
-        cross_cloud_yml="https://raw.githubusercontent.com/crosscloudci/cncf-configuration/staging/cross-cloud.yml"
-        cross_cloud_ref="staging"
-        cross_project_ref="staging"
-        dashboard_api_host_port="stagingapi.cncf.ci"
-        project_segment_env="staging"
       when "production"
         gitlab_base_url="https://gitlab.cncf.ci"
         cross_cloud_yml="https://raw.githubusercontent.com/crosscloudci/cncf-configuration/production/cross-cloud.yml"
@@ -26,28 +12,14 @@ module CrossCloudCi
         cross_project_ref="production"
         dashboard_api_host_port="productionapi.cncf.ci"
         project_segment_env="production"
-      when "demo"
-        gitlab_base_url="https://gitlab.demo.cncf.ci"
-        cross_cloud_yml="https://raw.githubusercontent.com/crosscloudci/cncf-configuration/production/cross-cloud.yml"
-        cross_cloud_ref="production"
-        cross_project_ref="production"
-        dashboard_api_host_port="demoapi.cncf.ci"
-      when "onapdemo"
-        gitlab_base_url="https://gitlab.onap.cncf.ci"
-        cross_cloud_yml="https://raw.githubusercontent.com/crosscloudci/cncf-configuration/production/cross-cloud.yml"
-        cross_cloud_ref="production"
-        cross_project_ref="production"
-        dashboard_api_host_port="onapapi.cncf.ci"
       # Default
       else
-        gitlab_base_url="https://gitlab.dev.cncf.ci"
-        # gitlab_base_url="https://dev.vulk.co:4002/api"
-        # cross_cloud_yml="https://raw.githubusercontent.com/crosscloudci/cncf-configuration/project-details-36/cross-cloud.yml"
+        gitlab_base_url="https://gitlab.cncf.ci"
         cross_cloud_yml="https://raw.githubusercontent.com/crosscloudci/cncf-configuration/master/cross-cloud.yml"
-        cross_cloud_ref="integration"
-        cross_project_ref="integration"
+        cross_cloud_ref="master"
+        cross_project_ref="master"
         dashboard_api_host_port="devapi.cncf.ci"
-        project_segment_env="integration"
+        project_segment_env="master"
       end
 
       # Environment overrides
